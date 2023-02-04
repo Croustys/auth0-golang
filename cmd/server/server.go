@@ -9,7 +9,8 @@ import (
 )
 
 func NewServer() *fiber.App {
-	return fiber.New()
+	config := initConfig()
+	return fiber.New(config)
 }
 
 func NewSession() *session.Store {
@@ -18,4 +19,10 @@ func NewSession() *session.Store {
 		KeyLookup:    "cookie:auth-session",
 		KeyGenerator: utils.UUID,
 	})
+}
+
+func initConfig() fiber.Config {
+	return fiber.Config{
+		Prefork: true,
+	}
 }
